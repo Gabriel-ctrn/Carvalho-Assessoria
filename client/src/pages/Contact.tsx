@@ -27,7 +27,7 @@ export default function Contact() {
       name: "",
       whatsapp: "",
       email: "",
-      objective: "",
+      objective: undefined,
       creditValue: "",
     },
   });
@@ -41,7 +41,13 @@ export default function Contact() {
         title: "Simulação enviada com sucesso!",
         description: "Entraremos em contato em breve através do WhatsApp.",
       });
-      form.reset();
+      form.reset({
+        name: "",
+        whatsapp: "",
+        email: "",
+        objective: undefined,
+        creditValue: "",
+      });
     },
     onError: (error: any) => {
       toast({
@@ -142,7 +148,7 @@ export default function Contact() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Qual o seu objetivo? *</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <Select onValueChange={field.onChange} value={field.value}>
                               <FormControl>
                                 <SelectTrigger data-testid="select-objective">
                                   <SelectValue placeholder="Selecione uma opção" />
