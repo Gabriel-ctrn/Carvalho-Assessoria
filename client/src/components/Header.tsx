@@ -22,7 +22,7 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           <Link href="/">
             <div className="flex items-center gap-2 hover-elevate active-elevate-2 px-3 py-2 rounded-md cursor-pointer" data-testid="link-home">
-              <div className="text-2xl font-bold text-primary">Consórcios Ademicon</div>
+              <div className="text-2xl font-bold text-primary">Carvalho Assessoria</div>
             </div>
           </Link>
 

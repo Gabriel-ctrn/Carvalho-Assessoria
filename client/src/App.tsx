@@ -1,4 +1,5 @@
-import { Switch, Route } from "wouter";
+import React from "react";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -27,6 +28,16 @@ function Router() {
   );
 }
 
+function ScrollToTop() {
+  const [location] = useLocation();
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
+  }, [location]);
+  return null;
+}
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -34,6 +45,7 @@ function App() {
         <div className="flex flex-col min-h-screen">
           <Header />
           <main className="flex-1">
+            <ScrollToTop />
             <Router />
           </main>
           <Footer />

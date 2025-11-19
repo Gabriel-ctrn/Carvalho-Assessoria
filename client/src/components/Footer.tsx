@@ -7,7 +7,7 @@ export function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4">Consórcios Ademicon</h3>
+            <h3 className="text-xl font-bold mb-4">Carvalho assessoria</h3>
             <p className="text-sm opacity-90 mb-4">
               Parceiros autorizados Ademicon. Realizando sonhos através de consórcios
               de imóveis, veículos e serviços.
@@ -64,11 +64,11 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2">
                 <Phone size={16} />
-                <span className="opacity-90">WhatsApp: (00) 00000-0000</span>
+                <span className="opacity-90">WhatsApp: (87) 99127-0108</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={16} />
-                <span className="opacity-90">contato@consorciosademicon.com.br</span>
+                <span className="opacity-90">odairsoares822@gmail.com</span>
               </li>
             </ul>
           </div>

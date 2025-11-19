@@ -8,14 +8,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Phone, Mail, MessageCircle } from "lucide-react";
+import { Instagram, Mail, MessageCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertContactSchema } from "@shared/schema";
 import type { InsertContact } from "@shared/schema";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+// We'll submit directly to a Formspree endpoint (no backend needed)
 import { useToast } from "@/hooks/use-toast";
 
 export default function Contact() {
@@ -32,15 +31,32 @@ export default function Contact() {
     },
   });
 
-  const mutation = useMutation({
-    mutationFn: async (data: InsertContact) => {
-      return await apiRequest("POST", "/api/contact", data);
-    },
-    onSuccess: () => {
+  const onSubmit = async (data: InsertContact) => {
+  const endpoint = (import.meta.env.VITE_FORMSPREE_ENDPOINT as string) || "https://formspree.io/f/xeonkvga";
+
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          whatsapp: data.whatsapp,
+          email: data.email,
+          objective: data.objective,
+          creditValue: data.creditValue,
+        }),
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || res.statusText || "Erro no envio");
+      }
+
       toast({
         title: "Simulação enviada com sucesso!",
-        description: "Entraremos em contato em breve através do WhatsApp.",
+        description: "Recebemos sua simulação e entraremos em contato em breve.",
       });
+
       form.reset({
         name: "",
         whatsapp: "",
@@ -48,18 +64,13 @@ export default function Contact() {
         objective: undefined,
         creditValue: "",
       });
-    },
-    onError: (error: any) => {
+    } catch (error: any) {
       toast({
         title: "Erro ao enviar simulação",
         description: error.message || "Por favor, tente novamente mais tarde.",
         variant: "destructive",
       });
-    },
-  });
-
-  const onSubmit = async (data: InsertContact) => {
-    mutation.mutate(data);
+    }
   };
 
   return (
@@ -113,7 +124,7 @@ export default function Contact() {
                             <FormLabel>WhatsApp *</FormLabel>
                             <FormControl>
                               <Input
-                                placeholder="(00) 00000-0000"
+                                placeholder="(87) 99127-0108"
                                 {...field}
                                 data-testid="input-whatsapp"
                               />
@@ -187,10 +198,10 @@ export default function Contact() {
                         type="submit"
                         size="lg"
                         className="w-full"
-                        disabled={mutation.isPending}
+                        disabled={form.formState.isSubmitting}
                         data-testid="button-submit"
                       >
-                        {mutation.isPending ? "ENVIANDO..." : "ENVIAR SIMULAÇÃO"}
+                        {form.formState.isSubmitting ? "ENVIANDO..." : "ENVIAR SIMULAÇÃO"}
                       </Button>
                     </form>
                   </Form>
@@ -205,7 +216,7 @@ export default function Contact() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <a
-                    href="https://wa.me/5500000000000"
+                    href="https://wa.me/5587991270108"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 p-4 bg-[#25D366] text-white rounded-md hover-elevate active-elevate-2"
@@ -214,33 +225,43 @@ export default function Contact() {
                     <MessageCircle className="w-6 h-6" />
                     <div>
                       <div className="font-semibold">WhatsApp</div>
-                      <div className="text-sm opacity-90">(00) 00000-0000</div>
+                      <div className="text-sm opacity-90">(87) 99127-0108</div>
                     </div>
                   </a>
 
-                  <div className="flex items-center gap-3 p-4 bg-card rounded-md">
-                    <Phone className="w-6 h-6 text-primary" />
+                  <a
+                    href="https://instagram.com/o.jose_carvalho"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-4 bg-card rounded-md hover-elevate active-elevate-2"
+                    data-testid="link-instagram"
+                  >
+                    <Instagram className="w-6 h-6 text-primary" />
                     <div>
-                      <div className="font-semibold text-foreground">Telefone</div>
-                      <div className="text-sm text-muted-foreground">(00) 0000-0000</div>
+                      <div className="font-semibold text-foreground">Instagram</div>
+                      <div className="text-sm text-muted-foreground">@o.jose_carvalho</div>
                     </div>
-                  </div>
+                  </a>
 
-                  <div className="flex items-center gap-3 p-4 bg-card rounded-md">
+                  <a
+                    href="mailto:odairsoares822@gmail.com"
+                    className="flex items-center gap-3 p-4 bg-card rounded-md hover-elevate active-elevate-2"
+                    data-testid="link-email"
+                  >
                     <Mail className="w-6 h-6 text-primary" />
                     <div>
                       <div className="font-semibold text-foreground">E-mail</div>
-                      <div className="text-sm text-muted-foreground">contato@consorciosademicon.com.br</div>
+                      <div className="text-sm text-muted-foreground">odairsoares822@gmail.com</div>
                     </div>
-                  </div>
+                  </a>
                 </CardContent>
               </Card>
 
               <Card className="bg-primary text-primary-foreground">
                 <CardContent className="py-6">
                   <h3 className="font-bold text-lg mb-2">Horário de Atendimento</h3>
-                  <p className="text-sm opacity-90">Segunda a Sexta: 9h às 18h</p>
-                  <p className="text-sm opacity-90">Sábado: 9h às 13h</p>
+                  <p className="text-sm opacity-90">Segunda a Sexta: 7h às 22h</p>
+                  <p className="text-sm opacity-90">Sábado: 9h às 19h</p>
                 </CardContent>
               </Card>
             </div>

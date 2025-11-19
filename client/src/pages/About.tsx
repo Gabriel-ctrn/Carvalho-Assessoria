@@ -118,15 +118,15 @@ export default function About() {
               <h3 className="text-2xl font-bold mb-4">Nossa Equipe</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
                 <div data-testid="card-team-member-odair">
-                  <div className="w-32 h-32 mx-auto mb-4 bg-primary-foreground/10 rounded-full flex items-center justify-center">
-                    <Users className="w-16 h-16" />
+                  <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-primary-foreground/10 flex items-center justify-center">
+                    <img src="/odair.jpeg" alt="Odair José Carvalho" className="w-full h-full object-cover" style={{ objectPosition: '50% 30%' }} />
                   </div>
                   <h4 className="text-xl font-semibold mb-2">Odair José Carvalho</h4>
                   <p className="text-sm opacity-90">Consultor Ademicon</p>
                 </div>
                 <div data-testid="card-team-member-jayme">
-                  <div className="w-32 h-32 mx-auto mb-4 bg-primary-foreground/10 rounded-full flex items-center justify-center">
-                    <Users className="w-16 h-16" />
+                  <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-primary-foreground/10 flex items-center justify-center">
+                    <img src="/gabriel.jpeg" alt="Jayme Gabriel Carvalho" className="w-full h-full object-cover" />
                   </div>
                   <h4 className="text-xl font-semibold mb-2">Jayme Gabriel Carvalho</h4>
                   <p className="text-sm opacity-90">Consultor Ademicon</p>
